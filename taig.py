@@ -22,6 +22,7 @@ b = '\033[0;34m'
 p = '\033[0;35m'
 c = '\033[0;36m'
 w = '\033[0;37m'
+O = '\033[38;2;255;127;0;1m'
 
 followers = []
 followings = []
@@ -96,11 +97,12 @@ def nyL(nyUSR,nyPWD):
 		if i not in followings:
 			tt=tt+1
 	print(f" {R}{{{w}#{R}}}{w} Kagak Lu follback: {str(tt)}");time.sleep(1);print(f'''
- {P}{{{w}01{P}}}{w} Unfollow yang kagak follback lu
- {P}{{{w}02{P}}}{w} Follback semua follower lu
- {P}{{{w}88{P}}}{w} Changelog
- {P}{{{w}99{P}}}{w} Logout
- {P}{{{w}00{P}}}{w} Exit
+ {P}{{{w}1{P}}}{w} Unfollow yang kagak follback lu
+ {P}{{{w}2{P}}}{w} Follback semua follower lu
+
+ {O}{{{w}R{O}}}{w} Report Bug
+ {O}{{{w}C{O}}}{w} Changelog      {O}{{{w}U{O}}}{w} Update
+ {O}{{{w}L{O}}}{w} Logout         {O}{{{w}E{O}}}{w} Exit
 ''')
 	nyIi = input(' >>> ')
 	if (nyIi == '1') or (nyIi == '01'):
@@ -124,12 +126,16 @@ def nyL(nyUSR,nyPWD):
 				nyUid = nyGid(i)
 				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} terfollow')
 				api.follow(nyUid)
-	elif nyIi == '88':
+	elif (nyIi == 'r') or (nyIi == 'R'):
+		nybug = input(f' {O}>>> {w}')
+	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
-	elif nyIi == '99':
+	elif (nyIi == 'l') or (nyIi == 'L'):
 		os.remove('Data/biskuit.log')
 		exit('\n Logout sukses bro \n')
-	elif nyIi == '00':
+	elif (nyIi == 'u') or (nyIi == 'U'):
+		os.system('git pull; python taig.py')
+	elif (nyIi == 'e') or (nyIi == 'E'):
 		exit('\n Sampai jumpa lagi bro \n')
 	else:
 		exit('\n Error bro, input kagak bener! \n')
