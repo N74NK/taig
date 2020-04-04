@@ -1,4 +1,4 @@
-import sys, json, os, time, random
+import sys, json, os, time, random, re
 
 try:
 	import stdiomask, requests, requests_toolbelt
@@ -78,7 +78,7 @@ def nyL(nyUSR,nyPWD):
 	nyrr = requests.get(nyU)
 	nyrrr = nyrr.json()
 	nyNN = str( nyrrr['users'][0].get("user").get("full_name") )
-	print(f'{w} Masuk sebagai {G}{nyNN} \n')
+	print(f'{w} Masuk sebagai {G}{nyNN}\n{w} Report bug ke FB atau WA Gua\n');time.sleep(0.5)
 	tt = 0
 	for i in followings:
 		tt=tt+1
@@ -96,14 +96,13 @@ def nyL(nyUSR,nyPWD):
 	for i in followers:
 		if i not in followings:
 			tt=tt+1
-	print(f" {R}{{{w}#{R}}}{w} Kagak Lu follback: {str(tt)}");time.sleep(1);print(f'''
+	print(f" {R}{{{w}#{R}}}{w} Kagak Lu follback: {str(tt)}");time.sleep(0.5);print(f'''
  {P}{{{w}1{P}}}{w} Unfollow yang kagak follback lu
  {P}{{{w}2{P}}}{w} Follback semua follower lu
 
- {O}{{{w}R{O}}}{w} Report Bug
- {O}{{{w}C{O}}}{w} Changelog      {O}{{{w}U{O}}}{w} Update
- {O}{{{w}L{O}}}{w} Logout         {O}{{{w}E{O}}}{w} Exit
-''')
+ {O}{{{w}C{O}}}{w} Changelog  {O}{{{w}U{O}}}{w} Update
+ {O}{{{w}L{O}}}{w} Logout     {O}{{{w}E{O}}}{w} Exit
+''');time.sleep(0.5)
 	nyIi = input(' >>> ')
 	if (nyIi == '1') or (nyIi == '01'):
 		nyCn = 0
@@ -126,8 +125,6 @@ def nyL(nyUSR,nyPWD):
 				nyUid = nyGid(i)
 				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} terfollow')
 				api.follow(nyUid)
-	elif (nyIi == 'r') or (nyIi == 'R'):
-		nybug = input(f' {O}>>> {w}')
 	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
 	elif (nyIi == 'l') or (nyIi == 'L'):
