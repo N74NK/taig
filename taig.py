@@ -1,9 +1,9 @@
 import sys, json, os, time, random
 
 try:
-	import stdiomask, requests
+	import stdiomask, requests, requests_toolbelt
 except:
-	os.system('pip install requests stdiomask')
+	os.system('pip install requests stdiomask requests_toolbelt')
 from Data import Nyhead
 from Data.InstagramAPI import InstagramAPI
 
@@ -33,7 +33,7 @@ nyMxD = 10
 def main():
 	Nyhead.nyLl()
 	try:
-		with open('data/biskuit.log', 'r') as nyb:
+		with open('Data/biskuit.log', 'r') as nyb:
 			nyf = nyb.read()
 			nyd = nyf.split("|")
 			nyUSR = nyd[0]
@@ -46,7 +46,7 @@ def login():
 	nyUSR = input(f' {P}{{{w}#{P}}}{w} Username: ')
 	nyPWD = stdiomask.getpass(prompt=f' {P}{{{w}#{P}}}{w} Password: ')
 	Nyhead.nyLl()
-	with open('data/biskuit.log', 'w') as nyb:
+	with open('Data/biskuit.log', 'w') as nyb:
 		nyb.write(f'{nyUSR}|{nyPWD}')
 		nyb.close
 	nyL(nyUSR,nyPWD)
@@ -127,7 +127,7 @@ def nyL(nyUSR,nyPWD):
 	elif nyIi == '88':
 		nyCl()
 	elif nyIi == '99':
-		os.remove('data/biskuit.log')
+		os.remove('Data/biskuit.log')
 		exit('\n Logout sukses bro \n')
 	elif nyIi == '00':
 		exit('\n Sampai jumpa lagi bro \n')
