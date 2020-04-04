@@ -30,6 +30,7 @@ followings = []
 # delay udah aman cok jangan diubah
 nyMnD = 5
 nyMxD = 10
+nyMxX = 100
 
 def main():
 	Nyhead.nyLl()
@@ -57,8 +58,12 @@ def nyCl():
 	print(f'''{P}v0.1 Released:{w}
  Add follow yg gak lu follback
  Add unfollow yg gak follback Lu
+ 
+{P}v0.2 Released:{w}
+ Add unfollow semua user
+ Add follow user dari hashtag
 ''');time.sleep(1)
-	input(f' {P}{{{w} Back{P} }}');main()
+	input(f' {P}{{{w} Back{P} }} ');main()
 
 def nyGid(nyUs):
 	nyUr = "https://www.instagram.com/web/search/topsearch/?context=blended&query="+nyUs+"&rank_token=0.3953592318270893&count=1"
@@ -97,14 +102,16 @@ def nyL(nyUSR,nyPWD):
 		if i not in followings:
 			tt=tt+1
 	print(f" {R}{{{w}#{R}}}{w} Kagak Lu follback: {str(tt)}");time.sleep(0.5);print(f'''
- {P}{{{w}1{P}}}{w} Unfollow yang kagak follback lu
- {P}{{{w}2{P}}}{w} Follback semua follower lu
+ {P}{{{w}01{P}}}{w} Unfollow semua orang
+ {P}{{{w}02{P}}}{w} Unfollow yang kagak follback lu
+ {P}{{{w}03{P}}}{w} Follback semua follower lu
+ {P}{{{w}04{P}}}{w} Follow user dari hashtag
 
- {O}{{{w}C{O}}}{w} Changelog  {O}{{{w}U{O}}}{w} Update
- {O}{{{w}L{O}}}{w} Logout     {O}{{{w}E{O}}}{w} Exit
+  {O}{{{w}C{O}}}{w} Changelog  {O}{{{w}U{O}}}{w} Update
+  {O}{{{w}L{O}}}{w} Logout     {O}{{{w}E{O}}}{w} Exit
 ''');time.sleep(0.5)
-	nyIi = input(' >>> ')
-	if (nyIi == '1') or (nyIi == '01'):
+	nyIi = input('  >>> ')
+	if (nyIi == '2') or (nyIi == '02'):
 		nyCn = 0
 		nyWL = open("kecualikan.txt").read().splitlines()
 		Nyhead.nyLl();print(f"{w} Unfollow dijalankan bro\n")
@@ -115,7 +122,7 @@ def nyL(nyUSR,nyPWD):
 				nyUid = nyGid(i)
 				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} diunfollow')
 				api.unfollow(nyUid)
-	elif (nyIi == '2') or (nyIi == '02'):
+	elif (nyIi == '3') or (nyIi == '03'):
 		nyCn = 0
 		Nyhead.nyLl();print(f"{w} Followback dijalankan bro\n")
 		for i in followers:
@@ -125,6 +132,32 @@ def nyL(nyUSR,nyPWD):
 				nyUid = nyGid(i)
 				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} terfollow')
 				api.follow(nyUid)
+	elif (nyIi == '1') or (nyIi == '01'):
+		nyCn = 0
+		Nyhead.nyLl();print(f"{w} Otw unfollow semua orang bro\n")
+		for i in followings:
+			nyCn +=1
+			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+			nyUid = nyGid(i)
+			print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} diunfollow')
+			api.unfollow(nyUid)
+	elif (nyIi == '4') or (nyIi == '04'):
+		Nyhead.nyLl()
+		tag = input(f'{w} Hashtag: ')
+		api.tagFeed(tag)
+		media_id = api.LastJson 
+		nyCn = 0
+		print(f' {w}Follow user dari Hashtag dijalankan\n')
+		for i in media_id["items"]:
+			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+			nyUMe = i.get("user")["username"]
+			nyuiD = i.get("user")["pk"]
+			nyCn += 1
+			api.follow(nyuiD)
+			print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {str(nyUMe)} terfollow')
+			if(nyCn>=nyMxX):
+				break
+		print(f' {w}Total {str(nyCn)} user terfollow \n')
 	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
 	elif (nyIi == 'l') or (nyIi == 'L'):
