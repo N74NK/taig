@@ -1,6 +1,6 @@
 ### Fitur
-- *Follow yang gak lu Follback*
-- *Unfollow yang gak Follback Lu*
+- Follow yang gak lu Follback
+- Unfollow yang gak Follback Lu
 
 
 ### Instalasi
