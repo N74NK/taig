@@ -67,7 +67,7 @@ class InstagramAPI:
                     self.token = self.LastResponse.cookies["csrftoken"]
                     return True;
                 else:
-                    os.remove('data/biskuit.log');exit(" \033[1;91m{\033[0;37m!\033[1;91m}\033[0;37m Login Kagak Berhasil")
+                    os.remove('Data/biskuit.log');exit(" \033[1;91m{\033[0;37m!\033[1;91m}\033[0;37m Login Kagak Berhasil\n")
 
 
     def follow(self, userId):
