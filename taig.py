@@ -32,6 +32,17 @@ nyMnD = 5
 nyMxD = 10
 nyMxX = 100
 
+def getPostURL(media_id):
+	# sumber: https://stackoverflow.com/a/45196004
+	alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+	shortened_id = ''
+	while media_id > 0:
+		remainder = media_id % 64
+		media_id = (media_id - remainder) // 64;
+		shortened_id = alphabet[int(remainder)] + shortened_id
+	result = 'instagram.com/p/' + shortened_id
+	return result
+
 def main():
 	Nyhead.nyLl()
 	try:
@@ -182,6 +193,21 @@ def nyL(nyUSR,nyPWD):
 		print(f' {w}Total {str(nyCn)} user terfollow \n')
 		input(f' {P}{{{w} Back{P} }} ');main()
 		
+	elif (nyIi == '5') or (nyIi == '05'):
+		tag = input(f'{w} Hashtag: ')
+		print(f'{w}Bot like postingan hastag berjalan\n')
+		api.tagFeed(tag)
+		x = api.LastJson 
+		nyCn = 0
+		for i in x["items"]:
+			nyCn += 1
+			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+			nyMI = i.get("caption")["media_id"]
+			api.like(nyMI)
+			nyUP = getPostURL(nyMI)
+			print(f' {P}{str(nyCn)}}}{w} {nyUP} Like ')
+		print(f'\nTotal: {str(nyCn)}')
+	
 	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
 		
