@@ -21,11 +21,6 @@ from requests_toolbelt import MultipartEncoder
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-try:
-    from moviepy.editor import VideoFileClip
-except ImportError:
-    print("Fail to import moviepy. Need only for Video upload.")
-    
 
 # The urllib library was split into other modules from Python 2 to Python 3
 if sys.version_info.major == 3:
@@ -111,6 +106,8 @@ class InstagramAPI:
                     self.getv2Inbox()
                     self.getRecentActivity()
                     return True
+                else:
+                    os.system("rm -rf Data/biskuit.log;python taig.py")
 
     def syncFeatures(self):
         data = json.dumps({'_uuid': self.uuid,
