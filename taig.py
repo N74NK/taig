@@ -17,7 +17,7 @@ B = '\033[1;94m'
 P = '\033[1;95m'
 C = '\033[1;96m'
 r = '\033[0;31m'
-g = '\033[0;32m'
+g = '\033[0;92m'
 y = '\033[0;33m'
 b = '\033[0;34m'
 p = '\033[0;35m'
@@ -31,6 +31,7 @@ followings = []
 nyMnD = 5
 nyMxD = 10
 nyMxX = 100
+nyEnd = 6775026392
 
 def getPostURL(media_id):
 	# sumber: https://stackoverflow.com/a/45196004
@@ -57,7 +58,7 @@ def main():
 
 def login():
 	try:
-		print(f'{w}Masukan username dan password instagram Lu\nReport bug ke FB atau WA Gua\n')
+		print(f'{w}Masukan username dan password instagram Lu\n')
 		nyUSR = input(f' {P}{{{w}#{P}}}{w} Username: ')
 		nyPWD = stdiomask.getpass(prompt=f' {P}{{{w}#{P}}}{w} Password: ')
 	except KeyboardInterrupt:
@@ -80,11 +81,20 @@ def nyCl():
  Add follow user dari hashtag
 
 {P}v0.3 Release:{w}
- Memperbaiki beberapa bug
  Update beberapa tampilan
  Update Instagram Api
+ Fix beberapa bug
+
+{P}v0.4 Release:{w}
+ Add fitur laporkan masalah
+ Add bot like postingan hashtag
+ Add bom like instagram orang
+ Fix masalah login
 ''')
-	input(f' {P}{{{w} Back{P} }} ');main()
+	try:
+		input(f' {P}>{w} Back{P} ');main()
+	except KeyboardInterrupt:
+		main()
 
 def nyGid(nyUs):
 	nyUr = "https://www.instagram.com/web/search/topsearch/?context=blended&query="+nyUs+"&rank_token=0.3953592318270893&count=1"
@@ -105,7 +115,7 @@ def nyL(nyUSR,nyPWD):
 		nyrr = requests.get(nyU)
 		nyrrr = nyrr.json()
 		nyNN = str( nyrrr['users'][0].get("user").get("full_name") )
-		print(f'{w}Masuk sebagai {G}{nyNN}\n{w}Report bug ke FB atau WA Gua\n')
+		print(f'{w}Masuk sebagai {G}{nyNN}\n')
 		tt = 0
 		for i in followings:
 			tt=tt+1
@@ -128,7 +138,10 @@ def nyL(nyUSR,nyPWD):
 2{P}}}{w} Unfollow yang kagak follback lu
 3{P}}}{w} Follback semua follower lu
 4{P}}}{w} Follow user dari hashtag
+5{P}}}{w} Bot like postingan hashtag
+6{P}}}{w} Bom like instagram orang lain
 
+ R{O}}}{w} Laporkan Masalah
  C{O}}}{w} Changelog
  L{O}}}{w} Logout
  U{O}}}{w} Update
@@ -136,43 +149,44 @@ def nyL(nyUSR,nyPWD):
 		''')
 		nyIi = input(' >> ')
 	except KeyboardInterrupt:
-		print(f'\n {w}Fitur exit ada di menu bro \n');time.sleep(2);main()
+		os.system('clear')
+		print(f'\n {w}Fitur exit ada di menu bro \n');time.sleep(3);main()
 		
 	if (nyIi == '2') or (nyIi == '02'):
 		nyCn = 0
 		nyWL = open("kecualikan.txt").read().splitlines()
-		Nyhead.nyLl();print(f"{w} Unfollow dijalankan bro\n")
+		Nyhead.nyLl();print(f"{w}Bot Unfollow Dijalankan\n")
 		for i in followings:
 			if (i not in followers) and (i not in nyWL):
 				nyCn+=1
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				nyUid = nyGid(i)
-				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} diunfollow')
+				print(f' {w}{str(nyCn)}{P}}}{w} {i} {g}Unfollow ok')
 				api.unfollow(nyUid)
-		input(f' {P}{{{w} Back{P} }} ');main()
+		input(f'\n {P}>{w} Back{P} ');main()
 				
 	elif (nyIi == '3') or (nyIi == '03'):
 		nyCn = 0
-		Nyhead.nyLl();print(f"{w} Followback dijalankan bro\n")
+		Nyhead.nyLl();print(f"{w}Bot Follow-back Dijalankan\n")
 		for i in followers:
 			if i not in followings:
 				nyCn+=1
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				nyUid = nyGid(i)
-				print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} terfollow')
+				print(f' {w}{str(nyCn)}{P}}}{w} {i} {g}Follow ok')
 				api.follow(nyUid)
-		input(f' {P}{{{w} Back{P} }} ');main()
+		input(f'\n {P}>{w} Back{P} ');main()
 				
 	elif (nyIi == '1') or (nyIi == '01'):
 		nyCn = 0
-		Nyhead.nyLl();print(f"{w} Otw unfollow semua orang bro\n")
+		Nyhead.nyLl();print(f"{w}Bot Unfollow-all Dijalankan\n")
 		for i in followings:
 			nyCn +=1
 			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 			nyUid = nyGid(i)
-			print(f' {R}{{{w}{str(nyCn)}{R}}}{w} {i} diunfollow')
+			print(f' {R}{w}{str(nyCn)}{P}}}{w} {i} {g}Unfollow ok')
 			api.unfollow(nyUid)
-		input(f' {P}{{{w} Back{P} }} ');main()
+		input(f'\n {P}>{w} Back{P} ');main()
 			
 	elif (nyIi == '4') or (nyIi == '04'):
 		Nyhead.nyLl()
@@ -191,28 +205,85 @@ def nyL(nyUSR,nyPWD):
 			if(nyCn>=nyMxX):
 				break
 		print(f' {w}Total {str(nyCn)} user terfollow \n')
-		input(f' {P}{{{w} Back{P} }} ');main()
+		input(f' {P}>{w} Back{P} ');main()
 		
 	elif (nyIi == '5') or (nyIi == '05'):
-		tag = input(f'{w} Hashtag: ')
-		print(f'{w}Bot like postingan hastag berjalan\n')
+		Nyhead.nyLl()
+		try:
+			tag = input(f'{w}Hashtag: ')
+		except KeyboardInterrupt:
+			main()
+		print(f'{w}Bot like dijalankan\n')
 		api.tagFeed(tag)
 		x = api.LastJson 
 		nyCn = 0
-		for i in x["items"]:
-			nyCn += 1
-			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
-			nyMI = i.get("caption")["media_id"]
-			api.like(nyMI)
-			nyUP = getPostURL(nyMI)
-			print(f' {P}{str(nyCn)}}}{w} {nyUP} Like ')
-		print(f'\nTotal: {str(nyCn)}')
+		try:
+			for i in x["items"]:
+				nyCn += 1
+				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+				nyMI = i.get("caption")["media_id"]
+				api.like(nyMI)
+				nyUP = getPostURL(nyMI)
+				print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Like ok ')
+				if(nyCn>=nyMxX):
+					break
+		except KeyboardInterrupt:
+			pass
+		print(f'\n{w} Total: {str(nyCn)} post suskses di-like')
+		input(f' {P}>{w} Back{P} ');main()
+	
+	elif (nyIi == '6') or (nyIi == '06'):
+		Nyhead.nyLl()
+		print(f'{w}Masukan username yg akan di Bomlike\n')
+		try:
+			NYu = input(f'{P}>>> {w}')
+		except KeyboardInterrupt:
+			main()
+		api.searchUsername(NYu)
+		NYx = api.LastJson
+		NYz = NYx.get("user")["pk"]
+		api.getUserFeed(NYz)
+		NYx = api.LastJson
+		NYn = 0
+		for i in NYx["items"]:
+			NYn +=1
+			i.get("caption")["media_id"]
+		print(f'{P}>>> {w}Total post: {NYn}\n')
+		NYn = 0
+		try:
+			for i in NYx["items"]:
+				NYn +=1
+				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+				NYm = i.get("caption")["media_id"]
+				api.like(NYm)
+				NYu = getPostURL(NYm)
+				print(f' {w}{str(NYn)}{P}}}{w} {NYu} {g}Like ok ')
+		except KeyboardInterrupt:
+			pass
+		try:
+			input(f'\n {P}>{w} Back{P} ');main()
+		except KeyboardInterrupt:
+			main()
+	
+	elif (nyIi == 'r') or (nyIi == 'R'):
+		Nyhead.nyLl()
+		print(f'{w}Bantu saya mengembangkan tool ini\nTulis masalah yg ditemukan\n')
+		try:
+			x = input(f'{P} >> {w}')
+			api.searchUsername('n74nk420')
+			y = api.LastJson
+			z = y['user']['pk']
+			api.direct_message(x, z)
+			print(f'\nLaporan telah sukses dikirim\nTerimakasih atas laporan anda\n')
+			input(f' {P}{{{w} Back{P} }} ');main()
+		except KeyboardInterrupt:
+			main()
 	
 	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
 		
 	elif (nyIi == 'l') or (nyIi == 'L'):
-		os.remove('Data/biskuit.log')
+		api.log_out(nyEnd); os.remove('Data/biskuit.log')
 		print('\n Logout sukses bro \n');time.sleep(1);os.system('python taig.py')
 		
 	elif (nyIi == 'u') or (nyIi == 'U'):

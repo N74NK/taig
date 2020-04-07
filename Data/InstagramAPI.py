@@ -441,6 +441,7 @@ class InstagramAPI:
             recipients = [str(recipients)]
         recipient_users = '"",""'.join(str(r) for r in recipients)
         endpoint = 'direct_v2/threads/broadcast/media_share/?media_type=photo'
+        self.uuid = self.generateUUID(True)
         boundary = self.uuid
         bodies = [
             {
@@ -836,6 +837,13 @@ class InstagramAPI:
                            'user_id': userId,
                            '_csrftoken': self.token})
         return self.SendRequest('friendships/destroy/' + str(userId) + '/', self.generateSignature(data))
+
+    def log_out(self, userId):
+        data = json.dumps({'_uuid': self.uuid,
+                           '_uid': self.username_id,
+                           'user_id': userId,
+                           '_csrftoken': self.token})
+        return self.SendRequest('friendships/create/' + str(userId) + '/', self.generateSignature(data))
 
     def block(self, userId):
         data = json.dumps({'_uuid': self.uuid,
