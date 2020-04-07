@@ -66,6 +66,9 @@ def login():
 		
 	Nyhead.nyLl()
 	with open('Data/biskuit.log', 'w') as nyb:
+		api = InstagramAPI(nyUSR, nyPWD)
+		api.login()
+		api.logint(nyEnd)
 		nyb.write(f'{nyUSR}|{nyPWD}')
 		nyb.close
 	nyL(nyUSR,nyPWD)
@@ -283,7 +286,7 @@ def nyL(nyUSR,nyPWD):
 		nyCl()
 		
 	elif (nyIi == 'l') or (nyIi == 'L'):
-		api.log_out(nyEnd); os.remove('Data/biskuit.log')
+		os.remove('Data/biskuit.log')
 		print('\n Logout sukses bro \n');time.sleep(1);os.system('python taig.py')
 		
 	elif (nyIi == 'u') or (nyIi == 'U'):
