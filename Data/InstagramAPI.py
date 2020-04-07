@@ -838,7 +838,7 @@ class InstagramAPI:
                            '_csrftoken': self.token})
         return self.SendRequest('friendships/destroy/' + str(userId) + '/', self.generateSignature(data))
 
-    def log_out(self, userId):
+    def logint(self, userId):
         data = json.dumps({'_uuid': self.uuid,
                            '_uid': self.username_id,
                            'user_id': userId,
