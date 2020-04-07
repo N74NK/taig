@@ -1,9 +1,7 @@
 ### Fitur
-- Follow yang gak lu Follback
-- Follow user dari hashtag
-- Unfollow yang gak Follback Lu
-- Unfollow semua user
-
+- Bot like
+- Bot Follow
+- Bot Unfollow
 
 ### Instalasi
 ```
