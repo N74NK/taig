@@ -12,6 +12,7 @@ from Data.InstagramAPI import InstagramAPI
 
 	Author : Njank Yuti
 	
+		https://youtube.com/NjankSoekamti
 		https://facebook.com/njnk.xnxx
 		https://instagram.com/n74nk420
 		https://github.com/N74NK
@@ -138,7 +139,7 @@ def nyL(nyUSR,nyPWD):
 		nyrr = requests.get(nyU)
 		nyrrr = nyrr.json()
 		nyNN = str( nyrrr['users'][0].get("user").get("full_name") )
-		print(f'{w}Masuk sebagai {G}{nyNN}\n')
+		print(f'{w}Masuk sebagai {G}{nyNN}\n{w}Next update > Spam DM\n')
 		tt = 0
 		for i in followings:
 			tt=tt+1
