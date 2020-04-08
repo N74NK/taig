@@ -1,12 +1,24 @@
-import sys, json, os, time, random, re
+import sys, json, os, time, random, re, stdiomask
 
 try:
-	import stdiomask, requests, requests_toolbelt
+	import requests, requests_toolbelt
 except:
-	os.system('pip install requests stdiomask requests_toolbelt')
+	os.system('pip install -r requirements.txt')
 
 from Data import Nyhead
 from Data.InstagramAPI import InstagramAPI
+
+'''
+
+	Author : Njank Yuti
+	
+		https://facebook.com/njnk.xnxx
+		https://instagram.com/n74nk420
+		https://github.com/N74NK
+		
+	Mengedit nama author itu sangat tidak epic bro
+
+'''
 
 D = '\033[90m'
 W = '\033[1;97m'
@@ -93,6 +105,13 @@ def nyCl():
  Add bot like postingan hashtag
  Add bom like instagram orang
  Fix masalah login
+
+{P}v0.5 Release:{w}
+ Add bot like postingan populer
+ Add bot komen instagram orang lain
+ Add bot komen postingan dari hashtag
+ Add bot komen postingan populer
+ Fix beberapa bug
 ''')
 	try:
 		input(f' {P}>{w} Back{P} ');main()
@@ -138,12 +157,18 @@ def nyL(nyUSR,nyPWD):
 			if i not in followings:
 				tt=tt+1
 		print(f''' {R}>{w} Kagak Lu follback: {str(tt)}\n
-1{P}}}{w} Unfollow semua orang
-2{P}}}{w} Unfollow yang kagak follback lu
-3{P}}}{w} Follback semua follower lu
-4{P}}}{w} Follow user dari hashtag
-5{P}}}{w} Bot like postingan hashtag
-6{P}}}{w} Bom like instagram orang lain
+ 01{P}}}{w} Unfollow semua orang
+ 02{P}}}{w} Unfollow yang kagak follback lu
+ 03{P}}}{w} Follback semua follower lu
+ 04{P}}}{w} Follow user dari hashtag
+
+ 05{P}}}{w} Bom like instagram orang lain
+ 06{P}}}{w} Bot like postingan dari hashtag
+ 07{P}}}{w} Bot like postingan populer
+
+ 08{P}}}{w} Bot komen instagram orang lain
+ 09{P}}}{w} Bot komen postingan dari hashtag
+ 10{P}}}{w} Bot komen postingan populer
 
  R{O}}}{w} Laporkan Masalah
  C{O}}}{w} Changelog
@@ -211,7 +236,7 @@ def nyL(nyUSR,nyPWD):
 		print(f' {w}Total {str(nyCn)} user terfollow \n')
 		input(f' {P}>{w} Back{P} ');main()
 		
-	elif (nyIi == '5') or (nyIi == '05'):
+	elif (nyIi == '6') or (nyIi == '06'):
 		Nyhead.nyLl()
 		try:
 			tag = input(f'{w}Hashtag: ')
@@ -236,7 +261,7 @@ def nyL(nyUSR,nyPWD):
 		print(f'\n{w} Total: {str(nyCn)} post suskses di-like')
 		input(f' {P}>{w} Back{P} ');main()
 	
-	elif (nyIi == '6') or (nyIi == '06'):
+	elif (nyIi == '5') or (nyIi == '05'):
 		Nyhead.nyLl()
 		print(f'{w}Masukan username yg akan di Bomlike\n')
 		try:
@@ -269,6 +294,30 @@ def nyL(nyUSR,nyPWD):
 		except KeyboardInterrupt:
 			main()
 	
+	elif (nyIi == '7') or (nyIi == '07'):
+		Nyhead.nyLl()
+		print(f'{w}Bot like popular feed dijalankan\n')
+		api.getPopularFeed()
+		x = api.LastJson 
+		nyCn = 0
+		try:
+			for i in x["items"]:
+				try:
+					nyCn += 1
+					time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+					nyMI = i.get("caption")["media_id"]
+					api.like(nyMI)
+					nyUP = getPostURL(nyMI)
+					print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Like ok ')
+					if(nyCn>=nyMxX):
+						break
+				except:
+					pass
+		except KeyboardInterrupt:
+			pass
+		print(f'\n{w} Total: {str(nyCn)} post suskses di-like')
+		input(f' {P}>{w} Back{P} ');main()
+	
 	elif (nyIi == 'r') or (nyIi == 'R'):
 		Nyhead.nyLl()
 		print(f'{w}Bantu saya mengembangkan tool ini\nTulis masalah yg ditemukan\n')
@@ -282,6 +331,91 @@ def nyL(nyUSR,nyPWD):
 			input(f' {P}{{{w} Back{P} }} ');main()
 		except KeyboardInterrupt:
 			main()
+	
+	elif (nyIi == '9') or (nyIi == '09'):
+		Nyhead.nyLl()
+		try:
+			tag = input(f'{w}Hashtag: ')
+			NYk = input(f'{w}Komentar: ')
+		except KeyboardInterrupt:
+			main()
+		print(f'{w}Bot komentar dijalankan\n')
+		api.tagFeed(tag)
+		x = api.LastJson 
+		nyCn = 0
+		try:
+			for i in x["items"]:
+				nyCn += 1
+				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+				nyMI = i.get("caption")["media_id"]
+				api.comment(nyMI,NYk)
+				nyUP = getPostURL(nyMI)
+				print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Komen ok ')
+				if(nyCn>=nyMxX):
+					break
+		except KeyboardInterrupt:
+			pass
+		print(f'\n {P}>{w} Total: {str(nyCn)} post suskses dikomen')
+		input(f' {P}>{w} Back{P} ');main()
+	
+	elif (nyIi == '8') or (nyIi == '08'):
+		Nyhead.nyLl()
+		try:
+			NYu = input(f'{w}Username: ')
+			NYk = input(f'{w}Komentar: ')
+		except KeyboardInterrupt:
+			main()
+		print(f'{w}Bot komentar dijalankan\n')
+		api.searchUsername(NYu)
+		NYx = api.LastJson
+		NYz = NYx.get("user")["pk"]
+		api.getUserFeed(NYz)
+		NYx = api.LastJson
+		NYn = 0
+		for i in NYx["items"]:
+			NYn +=1
+			i.get("caption")["media_id"]
+		print(f'{P}>>> {w}Total post: {NYn}\n')
+		NYn = 0
+		try:
+			for i in NYx["items"]:
+				NYn +=1
+				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+				NYm = i.get("caption")["media_id"]
+				api.comment(NYm,NYk)
+				NYu = getPostURL(NYm)
+				print(f' {w}{str(NYn)}{P}}}{w} {NYu} {g}Komen ok ')
+		except KeyboardInterrupt:
+			pass
+		try:
+			input(f'\n {P}>{w} Back{P} ');main()
+		except KeyboardInterrupt:
+			main()
+	
+	elif nyIi == '10':
+		Nyhead.nyLl()
+		NYk = input(f'{w}Komentar: ')
+		print(f'{w}Bot komentar popular feed dijalankan\n')
+		api.getPopularFeed()
+		x = api.LastJson 
+		nyCn = 0
+		try:
+			for i in x["items"]:
+				try:
+					nyCn += 1
+					time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
+					nyMI = i.get("caption")["media_id"]
+					api.comment(nyMI,NYk)
+					nyUP = getPostURL(nyMI)
+					print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Komen ok ')
+					if(nyCn>=nyMxX):
+						break
+				except:
+					pass
+		except KeyboardInterrupt:
+			pass
+		print(f'\n {P}>{w} Total: {str(nyCn)} post suskses dikomen')
+		input(f' {P}>{w} Back{P} ');main()
 	
 	elif (nyIi == 'c') or (nyIi == 'C'):
 		nyCl()
