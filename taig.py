@@ -1,64 +1,16 @@
-import sys, json, os, time, random, re, stdiomask
-
-try:
-	import requests, requests_toolbelt
-except:
-	os.system('pip install -r requirements.txt')
-
-from Data import Nyhead
+import os
+import re
+import sys
+import time
+import json
+import random
+import requests
+import stdiomask
+from Data.TaigSystem import *
 from Data.InstagramAPI import InstagramAPI
 
-'''
-
-	Author : Njank Yuti
-	
-		https://youtube.com/NjankSoekamti
-		https://facebook.com/njnk.xnxx
-		https://instagram.com/n74nk420
-		https://github.com/N74NK
-		
-	Mengedit nama author itu sangat tidak epic bro
-
-'''
-
-D = '\033[90m'
-W = '\033[1;97m'
-R = '\033[1;91m'
-G = '\033[1;92m'
-Y = '\033[1;93m'
-B = '\033[1;94m'
-P = '\033[1;95m'
-C = '\033[1;96m'
-r = '\033[0;31m'
-g = '\033[0;92m'
-y = '\033[0;33m'
-b = '\033[0;34m'
-p = '\033[0;35m'
-c = '\033[0;36m'
-w = '\033[0;37m'
-O = '\033[38;2;255;127;0;1m'
-
-followers = []
-followings = []
-
-nyMnD = 5
-nyMxD = 10
-nyMxX = 100
-nyEnd = 6775026392
-
-def getPostURL(media_id):
-	# sumber: https://stackoverflow.com/a/45196004
-	alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
-	shortened_id = ''
-	while media_id > 0:
-		remainder = media_id % 64
-		media_id = (media_id - remainder) // 64;
-		shortened_id = alphabet[int(remainder)] + shortened_id
-	result = 'instagram.com/p/' + shortened_id
-	return result
-
 def main():
-	Nyhead.nyLl()
+	Taig.logo()
 	try:
 		with open('Data/biskuit.log', 'r') as nyb:
 			nyf = nyb.read()
@@ -70,14 +22,13 @@ def main():
 		login()
 
 def login():
+	Taig.logo()
 	try:
 		print(f'{w}Masukan username dan password instagram Lu\n')
 		nyUSR = input(f' {P}{{{w}#{P}}}{w} Username: ')
 		nyPWD = stdiomask.getpass(prompt=f' {P}{{{w}#{P}}}{w} Password: ')
 	except KeyboardInterrupt:
 		exit('\n Sampai jumpa lagi bro \n')
-		
-	Nyhead.nyLl()
 	with open('Data/biskuit.log', 'w') as nyb:
 		api = InstagramAPI(nyUSR, nyPWD)
 		api.login()
@@ -85,35 +36,7 @@ def login():
 		nyb.write(f'{nyUSR}|{nyPWD}')
 		nyb.close
 	nyL(nyUSR,nyPWD)
-
-def nyCl():
-	Nyhead.nyLl()
-	print(f'''{P}v0.1 Releasee:{w}
- Add follow yg gak lu follback
- Add unfollow yg gak follback Lu
- 
-{P}v0.2 Release:{w}
- Add unfollow semua user
- Add follow user dari hashtag
-
-{P}v0.3 Release:{w}
- Update beberapa tampilan
- Update Instagram Api
- Fix beberapa bug
-
-{P}v0.4 Release:{w}
- Add fitur laporkan masalah
- Add bot like postingan hashtag
- Add bom like instagram orang
- Fix masalah login
-
-{P}v0.5 Release:{w}
- Add bot like postingan populer
- Add bot komen instagram orang lain
- Add bot komen postingan dari hashtag
- Add bot komen postingan populer
- Fix beberapa bug
-''')
+	
 	try:
 		input(f' {P}>{w} Back{P} ');main()
 	except KeyboardInterrupt:
@@ -128,6 +51,8 @@ def nyGid(nyUs):
 
 def nyL(nyUSR,nyPWD):
 	try:
+		followers = []
+		followings = []
 		api = InstagramAPI(nyUSR, nyPWD)
 		api.login()
 		api.generatingKeyApiSystem()
@@ -157,26 +82,8 @@ def nyL(nyUSR,nyPWD):
 		for i in followers:
 			if i not in followings:
 				tt=tt+1
-		print(f''' {R}>{w} Kagak Lu follback: {str(tt)}\n
- 01{P}}}{w} Unfollow semua orang
- 02{P}}}{w} Unfollow yang kagak follback lu
- 03{P}}}{w} Follback semua follower lu
- 04{P}}}{w} Follow user dari hashtag
-
- 05{P}}}{w} Bom like instagram orang lain
- 06{P}}}{w} Bot like postingan dari hashtag
- 07{P}}}{w} Bot like postingan populer
-
- 08{P}}}{w} Bot komen instagram orang lain
- 09{P}}}{w} Bot komen postingan dari hashtag
- 10{P}}}{w} Bot komen postingan populer
-
- R{O}}}{w} Laporkan Masalah
- C{O}}}{w} Changelog
- L{O}}}{w} Logout
- U{O}}}{w} Update
- E{O}}}{w} Exit
-		''')
+		print(f' {R}>{w} Kagak Lu follback: {str(tt)} \n')
+		Taig.menu()
 		nyIi = input(' >> ')
 	except KeyboardInterrupt:
 		os.system('clear')
@@ -185,7 +92,7 @@ def nyL(nyUSR,nyPWD):
 	if (nyIi == '2') or (nyIi == '02'):
 		nyCn = 0
 		nyWL = open("kecualikan.txt").read().splitlines()
-		Nyhead.nyLl();print(f"{w}Bot Unfollow Dijalankan\n")
+		Taig.logo();print(f"{w}Bot Unfollow Dijalankan\n")
 		for i in followings:
 			if (i not in followers) and (i not in nyWL):
 				nyCn+=1
@@ -197,7 +104,7 @@ def nyL(nyUSR,nyPWD):
 				
 	elif (nyIi == '3') or (nyIi == '03'):
 		nyCn = 0
-		Nyhead.nyLl();print(f"{w}Bot Follow-back Dijalankan\n")
+		Taig.logo();print(f"{w}Bot Follow-back Dijalankan\n")
 		for i in followers:
 			if i not in followings:
 				nyCn+=1
@@ -209,7 +116,7 @@ def nyL(nyUSR,nyPWD):
 				
 	elif (nyIi == '1') or (nyIi == '01'):
 		nyCn = 0
-		Nyhead.nyLl();print(f"{w}Bot Unfollow-all Dijalankan\n")
+		Taig.logo();print(f"{w}Bot Unfollow-all Dijalankan\n")
 		for i in followings:
 			nyCn +=1
 			time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
@@ -219,7 +126,7 @@ def nyL(nyUSR,nyPWD):
 		input(f'\n {P}>{w} Back{P} ');main()
 			
 	elif (nyIi == '4') or (nyIi == '04'):
-		Nyhead.nyLl()
+		Taig.logo()
 		tag = input(f'{w} Hashtag: ')
 		api.tagFeed(tag)
 		media_id = api.LastJson 
@@ -238,7 +145,7 @@ def nyL(nyUSR,nyPWD):
 		input(f' {P}>{w} Back{P} ');main()
 		
 	elif (nyIi == '6') or (nyIi == '06'):
-		Nyhead.nyLl()
+		Taig.logo()
 		try:
 			tag = input(f'{w}Hashtag: ')
 		except KeyboardInterrupt:
@@ -247,23 +154,23 @@ def nyL(nyUSR,nyPWD):
 		api.tagFeed(tag)
 		x = api.LastJson 
 		nyCn = 0
-		try:
-			for i in x["items"]:
+		for i in x["items"]:
+			try:
 				nyCn += 1
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				nyMI = i.get("caption")["media_id"]
 				api.like(nyMI)
-				nyUP = getPostURL(nyMI)
+				nyUP = Taig.getPostURL(nyMI)
 				print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Like ok ')
 				if(nyCn>=nyMxX):
 					break
-		except KeyboardInterrupt:
-			pass
+			except KeyboardInterrupt:
+				pass
 		print(f'\n{w} Total: {str(nyCn)} post suskses di-like')
 		input(f' {P}>{w} Back{P} ');main()
 	
 	elif (nyIi == '5') or (nyIi == '05'):
-		Nyhead.nyLl()
+		Taig.logo()
 		print(f'{w}Masukan username yg akan di Bomlike\n')
 		try:
 			NYu = input(f'{P}>>> {w}')
@@ -286,7 +193,7 @@ def nyL(nyUSR,nyPWD):
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				NYm = i.get("caption")["media_id"]
 				api.like(NYm)
-				NYu = getPostURL(NYm)
+				NYu = Taig.getPostURL(NYm)
 				print(f' {w}{str(NYn)}{P}}}{w} {NYu} {g}Like ok ')
 		except KeyboardInterrupt:
 			pass
@@ -296,7 +203,7 @@ def nyL(nyUSR,nyPWD):
 			main()
 	
 	elif (nyIi == '7') or (nyIi == '07'):
-		Nyhead.nyLl()
+		Taig.logo()
 		print(f'{w}Bot like popular feed dijalankan\n')
 		api.getPopularFeed()
 		x = api.LastJson 
@@ -308,7 +215,7 @@ def nyL(nyUSR,nyPWD):
 					time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 					nyMI = i.get("caption")["media_id"]
 					api.like(nyMI)
-					nyUP = getPostURL(nyMI)
+					nyUP = Taig.getPostURL(nyMI)
 					print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Like ok ')
 					if(nyCn>=nyMxX):
 						break
@@ -320,7 +227,7 @@ def nyL(nyUSR,nyPWD):
 		input(f' {P}>{w} Back{P} ');main()
 	
 	elif (nyIi == 'r') or (nyIi == 'R'):
-		Nyhead.nyLl()
+		Taig.logo()
 		print(f'{w}Bantu saya mengembangkan tool ini\nTulis masalah yg ditemukan\n')
 		try:
 			x = input(f'{P} >> {w}')
@@ -334,7 +241,7 @@ def nyL(nyUSR,nyPWD):
 			main()
 	
 	elif (nyIi == '9') or (nyIi == '09'):
-		Nyhead.nyLl()
+		Taig.logo()
 		try:
 			tag = input(f'{w}Hashtag: ')
 			NYk = input(f'{w}Komentar: ')
@@ -350,7 +257,7 @@ def nyL(nyUSR,nyPWD):
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				nyMI = i.get("caption")["media_id"]
 				api.comment(nyMI,NYk)
-				nyUP = getPostURL(nyMI)
+				nyUP = Taig.getPostURL(nyMI)
 				print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Komen ok ')
 				if(nyCn>=nyMxX):
 					break
@@ -360,7 +267,7 @@ def nyL(nyUSR,nyPWD):
 		input(f' {P}>{w} Back{P} ');main()
 	
 	elif (nyIi == '8') or (nyIi == '08'):
-		Nyhead.nyLl()
+		Taig.logo()
 		try:
 			NYu = input(f'{w}Username: ')
 			NYk = input(f'{w}Komentar: ')
@@ -384,7 +291,7 @@ def nyL(nyUSR,nyPWD):
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				NYm = i.get("caption")["media_id"]
 				api.comment(NYm,NYk)
-				NYu = getPostURL(NYm)
+				NYu = Taig.getPostURL(NYm)
 				print(f' {w}{str(NYn)}{P}}}{w} {NYu} {g}Komen ok ')
 		except KeyboardInterrupt:
 			pass
@@ -394,7 +301,7 @@ def nyL(nyUSR,nyPWD):
 			main()
 	
 	elif nyIi == '10':
-		Nyhead.nyLl()
+		Taig.logo()
 		NYk = input(f'{w}Komentar: ')
 		print(f'{w}Bot komentar popular feed dijalankan\n')
 		api.getPopularFeed()
@@ -407,7 +314,7 @@ def nyL(nyUSR,nyPWD):
 					time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 					nyMI = i.get("caption")["media_id"]
 					api.comment(nyMI,NYk)
-					nyUP = getPostURL(nyMI)
+					nyUP = Taig.getPostURL(nyMI)
 					print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Komen ok ')
 					if(nyCn>=nyMxX):
 						break
@@ -419,11 +326,11 @@ def nyL(nyUSR,nyPWD):
 		input(f' {P}>{w} Back{P} ');main()
 	
 	elif (nyIi == 'c') or (nyIi == 'C'):
-		nyCl()
+		Taig.logo()
+		Taig.changelog()
 		
 	elif (nyIi == 'l') or (nyIi == 'L'):
-		os.remove('Data/biskuit.log')
-		print('\n Logout sukses bro \n');time.sleep(1);os.system('python taig.py')
+		Taig.logout()
 		
 	elif (nyIi == 'u') or (nyIi == 'U'):
 		os.system('git pull; python taig.py')
@@ -434,5 +341,7 @@ def nyL(nyUSR,nyPWD):
 	else:
 		print('\n Error bro, input kagak bener! \n');time.sleep(1);main()
 
+
 if __name__ == "__main__":
 	main()
+
