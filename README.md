@@ -1,5 +1,10 @@
 ![Taig Logo](/Data/TaigLogo.jpg)
 
+## Table of Contents
+* [The Feature](#the-features)
+* [Installation](#installation)
+* [Video Instalation](#video-installation)
+
 ## The Features
 * Bot Like
   * Like all hastag post
