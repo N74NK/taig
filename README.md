@@ -1,8 +1,14 @@
 ### Fitur
-- Bot Like
-- Bot Komen
-- Bot Follow
-- Bot Unfollow
+* Bot Like
+  * Like all Hastag post
+  * Like all User post
+  * Like all Popular post
+* Bot Komen
+  * Comment all Hastag post
+  * Comment all User post
+  * Comment all Popular post
+* Bot Follow
+* Bot Unfollow
 
 ### Instalasi
 ```
