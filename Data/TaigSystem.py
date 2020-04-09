@@ -30,9 +30,9 @@ class Taig:
 		return result
 
 	def logout():
-		os.remove('Data/biskuit.log')
-		print('\n Logout sukses bro \n')
-		time.sleep(1.0)
+		os.remove('Data/.biskuit.log')
+		print('\n {P}>{w} Logout sukses bro \n'.format(P=P, w=w))
+		time.sleep(1.5)
 		os.system('python taig.py')
 
 	def changelog():
@@ -141,7 +141,7 @@ randomNumber = ["2281884466649246001", "2278501528133982216", "21974048654040237
 				"1674887394056315991", "1674145490171836247"]
 
 # The urllib library was split into other modules from Python 2 to Python 3
-genIDkey = '2281884466649246001'
+genIDkey = "2281884466649246001"
 if sys.version_info.major == 3:
     import urllib.parse
 try:
@@ -249,7 +249,9 @@ class InstagramAPI:
                     self.getRecentActivity()
                     return True
                 else:
-                    os.system("rm -rf Data/biskuit.log;python taig.py")
+                    print(' {P}> {w}Username/password tidak benar'.format(P=P, w=w))
+                    time.sleep(1)
+                    os.system("rm -rf Data/.biskuit.log;python taig.py")
 
     def syncFeatures(self):
         data = json.dumps({'_uuid': self.uuid,

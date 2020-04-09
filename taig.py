@@ -43,19 +43,24 @@ def main():
 			nyf = nyb.read()
 			nyd = nyf.split("|")
 			nyUSR = nyd[0]
-			nyPWD = nyd[1]
+			try:
+				nyPWD = nyd[1]
+			except IndexError:
+				os.remove('Data/biskuit.log')
+				os.system('python taig.py')
 			nyL(nyUSR,nyPWD)
+		
 	except FileNotFoundError:
 		login()
 
 def login():
 	Taig.logo()
 	try:
-		print(f'{w}Masukan username dan password instagram Lu\n')
-		nyUSR = input(f' {P}{{{w}#{P}}}{w} Username: ')
-		nyPWD = stdiomask.getpass(prompt=f' {P}{{{w}#{P}}}{w} Password: ')
+		print(f'{w}Masukan username dan password instagram Lu\nLaporkan error ke Instagram {y}@n74nk420\n')
+		nyUSR = input(f' {P}>{w} Username: ')
+		nyPWD = stdiomask.getpass(prompt=f' {P}>{w} Password: ')
 	except KeyboardInterrupt:
-		exit('\n Sampai jumpa lagi bro \n')
+		exit(f' {P}> {w}Program diberhentikan paksa \n')
 	with open('Data/.biskuit.log', 'w') as nyb:
 		api = InstagramAPI(nyUSR, nyPWD)
 		api.login()
@@ -78,6 +83,7 @@ def nyGid(nyUs):
 
 def nyL(nyUSR,nyPWD):
 	try:
+		Taig.logo()
 		followers = []
 		followings = []
 		api = InstagramAPI(nyUSR, nyPWD)
