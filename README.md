@@ -1,16 +1,20 @@
-### Fitur
+### The Features
 * Bot Like
-  * Like all Hastag post
-  * Like all User post
-  * Like all Popular post
+  * Like all hastag post
+  * Like all user post
+  * Like all popular post
 * Bot Komen
-  * Comment all Hastag post
-  * Comment all User post
-  * Comment all Popular post
+  * Comment all hastag post
+  * Comment all user post
+  * Comment all popular post
 * Bot Follow
+  * Follow user by hashtag
+  * Follow back all user
 * Bot Unfollow
+  * Unfollow not follow back
+  * Unfollow all user
 
-### Instalasi
+### Installation
 ```
 $ pkg install git python
 $ git clone https://github.com/N74NK/taig
@@ -18,5 +22,4 @@ $ cd taig
 $ pip install -r requirements.txt
 $ python taig.py
 ```
-
 ---------------------
