@@ -1,4 +1,4 @@
-### The Features
+## The Features
 * Bot Like
   * Like all hastag post
   * Like all user post
@@ -14,7 +14,7 @@
   * Unfollow not follow back
   * Unfollow all user
 
-### Installation
+## Installation
 ```
 $ pkg install git python
 $ git clone https://github.com/N74NK/taig
