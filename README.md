@@ -1,3 +1,5 @@
+![Taig Logo](/Data/TaigLogo.jpg)
+
 ## The Features
 * Bot Like
   * Like all hastag post
