@@ -7,12 +7,39 @@ import random
 import requests
 import stdiomask
 from Data.TaigSystem import *
-from Data.InstagramAPI import InstagramAPI
+
+
+'''
+
+
+		Author : Njank Yuti
+
+			https://youtube.com/NjankSoekamti
+			https://facebook.com/njnk.xnxx
+			https://instagram.com/n74nk420
+			https://github.com/N74NK
+			
+	Mengedit nama author itu sangat tidak epic bro
+	Bantu gua kembangin tool ini dengan memberikan saran
+
+
+	Greetings : TermuxID.3
+				Xiuz.Coder
+				SubangXploit
+				Termux.Indonesia
+				BlackHole.Sec
+				IndoXploit
+				LevPasha
+				Tim.Sakit
+
+
+'''
+
 
 def main():
 	Taig.logo()
 	try:
-		with open('Data/biskuit.log', 'r') as nyb:
+		with open('Data/.biskuit.log', 'r') as nyb:
 			nyf = nyb.read()
 			nyd = nyf.split("|")
 			nyUSR = nyd[0]
@@ -29,7 +56,7 @@ def login():
 		nyPWD = stdiomask.getpass(prompt=f' {P}{{{w}#{P}}}{w} Password: ')
 	except KeyboardInterrupt:
 		exit('\n Sampai jumpa lagi bro \n')
-	with open('Data/biskuit.log', 'w') as nyb:
+	with open('Data/.biskuit.log', 'w') as nyb:
 		api = InstagramAPI(nyUSR, nyPWD)
 		api.login()
 		api.logint(nyEnd)
