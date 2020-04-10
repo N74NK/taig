@@ -97,7 +97,7 @@ def nyL(nyUSR,nyPWD):
 		nyrr = requests.get(nyU)
 		nyrrr = nyrr.json()
 		nyNN = str( nyrrr['users'][0].get("user").get("full_name") )
-		print(f'{w}Masuk sebagai {G}{nyNN}\n{w}Next update > Spam DM\n')
+		print(f'{w}Masuk sebagai {G}{nyNN}\n')
 		tt = 0
 		for i in followings:
 			tt=tt+1
@@ -187,8 +187,8 @@ def nyL(nyUSR,nyPWD):
 		api.tagFeed(tag)
 		x = api.LastJson 
 		nyCn = 0
-		for i in x["items"]:
-			try:
+		try:
+			for i in x["items"]:
 				nyCn += 1
 				time.sleep(float( random.uniform(nyMnD*10,nyMxD*10) / 10 ))
 				nyMI = i.get("caption")["media_id"]
@@ -197,7 +197,7 @@ def nyL(nyUSR,nyPWD):
 				print(f' {w}{str(nyCn)}{P}}}{w} {nyUP} {g}Like ok ')
 				if(nyCn>=nyMxX):
 					break
-			except KeyboardInterrupt:
+		except KeyboardInterrupt:
 				pass
 		print(f'\n{w} Total: {str(nyCn)} post suskses di-like')
 		input(f' {P}>{w} Back{P} ');main()
